@@ -35,13 +35,17 @@ CMD ["/bin/bash", "/docker_entrypoint.sh"]
 # ENVIRONMENT VARIABLES. See README.md for descriptions.
 
 ENV SERVER_NAME=localhost \
-    LDAP_TRUSTED_GLOBAL_CERT_PATH=/etc/ssl/certs/ldap-ca-cert.pem \
-    LDAP_LIBRARY_DEBUG=0 \
     SSL_CERTIFICATE_FILE=/etc/ssl/certs/reg-proxy-cert.pem \
     SSL_CERTIFICATE_KEY_FILE=/etc/ssl/private/reg-proxy-key.pem \
-    AUTH_LDAP_URL="ldap://dc-01.example.com:3268/?userPrincipalName?sub" \
     LDAP_TRUSTED_MODE=NONE \
     REQUIRE_AUTHZ_TYPE=ldap-user \
     REQUIRE_AUTHZ_USERS=registry.admin@example.com \
-    LOG_LEVEL=warn
+    LOG_LEVEL=warn \
+    AUTH_NAME=MYDOMAIN \
+    AUTH_LDAP_URL="ldap://yourdomain:3268/DC=youdomain,DC=local?sAMAccountName?sub?(&(objectCategory=User)(!(objectClass=contact))(!(userAccountControl:1.2.840.113556.1.4.803:=2)))" \
+    AUTH_LDAP_BIND_DN="CN=youruser,OU=etc,DC=yourdomain,DC=local" \
+    AUTH_LDAP_BIND_PASSWORD=yourpassword \
+    REQUIRE_AUTHZ_GROUP="cn=yourgroup,OU=etc,DC=yourdomain,DC=local" \
+    REGISTRY_PORT_5000_TCP_ADDR=localhost \
+    REGISTRY_PORT_5000_TCP_PORT=5000
 
