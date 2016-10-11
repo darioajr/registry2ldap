@@ -1,5 +1,4 @@
 # A Docker registry2 proxy that authenticates against LDAP.
-
 FROM centos
 MAINTAINER Dario Alves Junior <darioajr@gmail.com>
 
